@@ -6,6 +6,7 @@ import {
   Text,
   useColorModeValue,
   Flex,
+  Button,
 } from "@chakra-ui/react";
 import PlatformIcons from "./PlatformIcons";
 import useGames from "../hooks/useGames";
@@ -27,9 +28,12 @@ const GameGrid: React.FC<GameGridProps> = ({
   searchQuery,
 }) => {
   const {
-    data: games,
+    data,
     error,
     isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
   } = useGames({
     genres: selectedGenre?.id,
     platforms: selectedPlatform?.id,
@@ -52,10 +56,12 @@ const GameGrid: React.FC<GameGridProps> = ({
     );
   }
 
+  const games = data?.pages.flatMap((page) => page.results) || [];
+
   return (
     <Box padding="4" bg={bgColor} maxWidth="1600px" mx="auto">
       <SimpleGrid columns={{ sm: 2, md: 2, lg: 4 }} spacing={8}>
-        {games?.map((game: Game) => (
+        {games.map((game: Game) => (
           <Box
             key={game.id}
             p="4"
@@ -99,6 +105,17 @@ const GameGrid: React.FC<GameGridProps> = ({
           </Box>
         ))}
       </SimpleGrid>
+      {hasNextPage && (
+        <Flex justifyContent="center" mt={4}>
+          <Button
+            onClick={() => fetchNextPage()}
+            isLoading={isFetchingNextPage}
+            loadingText="Loading more"
+          >
+            Load More
+          </Button>
+        </Flex>
+      )}
     </Box>
   );
 };

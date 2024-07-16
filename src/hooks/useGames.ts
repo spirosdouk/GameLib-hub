@@ -1,30 +1,47 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import apiClient from "../services/api-client";
 import { Game } from "../components/GameTypes";
 
 interface GameResponse {
   results: Game[];
+  next: string | null;
 }
 
-const fetchGames = async (params: {
+interface FetchGamesParams {
   genres?: number;
   platforms?: number;
   ordering?: string;
   search?: string;
-}) => {
-  const response = await apiClient.get<GameResponse>("/games", { params });
-  return response.data.results;
-};
+}
 
-const useGames = (params: {
-  genres?: number;
-  platforms?: number;
-  ordering?: string;
-  search?: string;
-}) => {
-  return useQuery(["games", params], () => fetchGames(params), {
-    enabled: !!params,
-  });
+
+const fetchGames = async ({ pageParam = 1, queryKey }: { pageParam?: number; queryKey: [string, FetchGamesParams] }) => {
+    const [, params] = queryKey;
+    const { genres, platforms, ordering, search } = params;
+    const response = await apiClient.get<GameResponse>("/games", {
+      params: {
+        page: pageParam,
+        genres,
+        platforms,
+        ordering,
+        search,
+      },
+    });
+    return response.data;
+  };
+  
+
+const useGames = (params: FetchGamesParams) => {
+  return useInfiniteQuery(
+    ["games", params],
+    fetchGames,
+    {
+      getNextPageParam: (lastPage) => {
+        const url = new URL(lastPage.next || '');
+        return url.searchParams.get('page');
+      },
+    }
+  );
 };
 
 export default useGames;
