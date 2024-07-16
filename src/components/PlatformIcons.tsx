@@ -15,12 +15,12 @@ import { SiNintendo } from "react-icons/si";
 import { Platform } from "./GameTypes";
 
 interface PlatformProps {
-  platforms: {
+  platforms?: {
     platform: Platform;
   }[];
 }
 
-const PlatformIcons: React.FC<PlatformProps> = ({ platforms }) => {
+const PlatformIcons: React.FC<PlatformProps> = ({ platforms = [] }) => {
   const getPlatformIcon = (platformName: string): JSX.Element => {
     const name = platformName.toLowerCase();
     switch (name) {
@@ -46,6 +46,7 @@ const PlatformIcons: React.FC<PlatformProps> = ({ platforms }) => {
         return <BsGlobe />;
     }
   };
+
   return (
     <Flex>
       {platforms.map(({ platform }) => (

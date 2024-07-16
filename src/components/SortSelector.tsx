@@ -1,4 +1,5 @@
-import { Box, Select, Text, useColorModeValue } from "@chakra-ui/react";
+import React from "react";
+import { Box, Select, useColorModeValue } from "@chakra-ui/react";
 
 interface SortSelectorProps {
   selectedSort: string;

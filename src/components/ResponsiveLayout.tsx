@@ -24,7 +24,6 @@ const ResponsiveLayout = ({}) => {
 
   const [genres, setGenres] = useState<Genre[]>([]);
   const [platforms, setPlatforms] = useState<Platform[]>([]);
-  const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -46,44 +45,9 @@ const ResponsiveLayout = ({}) => {
       }
     };
 
-    const fetchGames = async () => {
-      try {
-        const res = await apiClient.get<GamesResponse>("/games");
-        setGames(res.data.results);
-      } catch (err) {
-        setError((err as { message: string }).message);
-      }
-    };
-
     fetchGenres();
     fetchPlatforms();
-    fetchGames();
   }, []);
-
-  useEffect(() => {
-    const fetchFilteredGames = async () => {
-      const params: {
-        genres?: number;
-        platforms?: number;
-        ordering?: string;
-        search?: string;
-      } = {};
-
-      if (selectedGenre) params.genres = selectedGenre.id;
-      if (selectedPlatform) params.platforms = selectedPlatform.id;
-      if (selectedSort) params.ordering = selectedSort;
-      if (searchQuery) params.search = searchQuery;
-
-      try {
-        const res = await apiClient.get<GamesResponse>("/games", { params });
-        setGames(res.data.results);
-      } catch (err) {
-        setError((err as { message: string }).message);
-      }
-    };
-
-    fetchFilteredGames();
-  }, [selectedGenre, selectedPlatform, selectedSort, searchQuery]);
 
   return (
     <Grid
@@ -121,7 +85,12 @@ const ResponsiveLayout = ({}) => {
               />
             </Box>
           </Flex>
-          <GameGrid games={games} error={error} />
+          <GameGrid
+            selectedGenre={selectedGenre}
+            selectedPlatform={selectedPlatform}
+            selectedSort={selectedSort}
+            searchQuery={searchQuery}
+          />
         </Flex>
       </GridItem>
     </Grid>
