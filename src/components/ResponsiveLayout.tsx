@@ -1,30 +1,31 @@
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Grid, GridItem, Box, Flex, Text } from "@chakra-ui/react";
 import Navbar from "./Navbar";
 import GameGrid from "./GameGrid";
 import GenreGrid from "./GenreGrid";
 import apiClient from "../services/api-client";
 import { Genre, GenreResponse } from "../types/GenreTypes";
-import { Game, Platform, PlatformResponse } from "../types/GameTypes";
+import { Platform, PlatformResponse } from "../types/GameTypes";
 import PlatformGrid from "./PlatformGrid";
 import SortSelector from "./SortSelector";
-
-interface GamesResponse {
-  count: number;
-  results: Game[];
-}
+import useFilterStore from "../store";
 
 const ResponsiveLayout = ({}) => {
-  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
-  const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
-    null
-  );
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedSort, setSelectedSort] = useState<string>("");
+  const {
+    setSelectedGenre,
+    setSelectedPlatform,
+    setSelectedSort,
+    setSearchQuery,
+  } = useFilterStore((state) => ({
+    setSelectedGenre: state.setSelectedGenre,
+    setSelectedPlatform: state.setSelectedPlatform,
+    setSelectedSort: state.setSelectedSort,
+    setSearchQuery: state.setSearchQuery,
+  }));
 
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [platforms, setPlatforms] = useState<Platform[]>([]);
-  const [error, setError] = useState("");
+  const [genres, setGenres] = React.useState<Genre[]>([]);
+  const [platforms, setPlatforms] = React.useState<Platform[]>([]);
+  const [error, setError] = React.useState<string>("");
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -49,6 +50,16 @@ const ResponsiveLayout = ({}) => {
     fetchPlatforms();
   }, []);
 
+  if (error) {
+    return (
+      <Box padding="4" bg="red.100" borderRadius="md">
+        <Text fontSize="lg" color="red.500">
+          {error}
+        </Text>
+      </Box>
+    );
+  }
+
   return (
     <Grid
       h="100vh"
@@ -64,33 +75,19 @@ const ResponsiveLayout = ({}) => {
         <Navbar onSearch={setSearchQuery} />
       </GridItem>
       <GridItem area="aside" display={{ base: "none", md: "block" }}>
-        <GenreGrid
-          selectedGenre={selectedGenre}
-          onGenreSelect={setSelectedGenre}
-        />
+        <GenreGrid />
       </GridItem>
       <GridItem area="main">
         <Flex direction="column" align="flex-start" p={3}>
           <Flex width="40%" mb={4} justifyContent="space-between">
             <Box width="60%">
-              <PlatformGrid
-                selectedPlatform={selectedPlatform}
-                onPlatformSelect={setSelectedPlatform}
-              />
+              <PlatformGrid />
             </Box>
             <Box width="70%">
-              <SortSelector
-                selectedSort={selectedSort}
-                onSortSelect={setSelectedSort}
-              />
+              <SortSelector />
             </Box>
           </Flex>
-          <GameGrid
-            selectedGenre={selectedGenre}
-            selectedPlatform={selectedPlatform}
-            selectedSort={selectedSort}
-            searchQuery={searchQuery}
-          />
+          <GameGrid />
         </Flex>
       </GridItem>
     </Grid>

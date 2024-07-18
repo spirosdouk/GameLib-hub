@@ -7,15 +7,15 @@ import {
   useColorModeValue,
   Flex,
 } from "@chakra-ui/react";
-import { Genre } from "../types/GenreTypes";
 import useGenres from "../hooks/useGenres";
+import useFilterStore from "../store";
 
-interface Props {
-  selectedGenre: Genre | null;
-  onGenreSelect: (genre: Genre) => void;
-}
+const GenreGrid = () => {
+  const { setSelectedGenre, selectedGenre } = useFilterStore((state) => ({
+    setSelectedGenre: state.setSelectedGenre,
+    selectedGenre: state.selectedGenre,
+  }));
 
-const GenreGrid = ({ selectedGenre, onGenreSelect }: Props) => {
   const { data: genres, error, isLoading } = useGenres();
 
   const bgColor = useColorModeValue("gray.100", "gray.800");
@@ -37,7 +37,7 @@ const GenreGrid = ({ selectedGenre, onGenreSelect }: Props) => {
   return (
     <Box padding="3" bg={bgColor} maxWidth="200px" mx="auto">
       <SimpleGrid columns={1} spacing={3}>
-        {genres?.map((genre: Genre) => (
+        {genres?.map((genre) => (
           <Box
             key={genre.id}
             p={3}
@@ -53,7 +53,7 @@ const GenreGrid = ({ selectedGenre, onGenreSelect }: Props) => {
             }}
             cursor="pointer"
             onClick={() => {
-              onGenreSelect(genre);
+              setSelectedGenre(genre);
             }}
           >
             <Flex align="center" justify="space-between">

@@ -6,29 +6,27 @@ import {
   Text,
   useColorModeValue,
   Flex,
-  Button,
 } from "@chakra-ui/react";
 import PlatformIcons from "./PlatformIcons";
 import useGames from "../hooks/useGames";
 import { Game } from "../types/GameTypes";
-import { Genre } from "../types/GenreTypes";
-import { Platform } from "../types/GameTypes";
 import InfiniteScroll from "react-infinite-scroll-component";
+import useFilterStore from "../store";
 
-interface GameGridProps {
-  selectedGenre?: Genre | null;
-  selectedPlatform?: Platform | null;
-  selectedSort?: string;
-  searchQuery?: string;
-}
+const GameGrid: React.FC = () => {
+  const selectedGenre = useFilterStore((state) => state.selectedGenre);
+  const selectedPlatform = useFilterStore((state) => state.selectedPlatform);
+  const selectedSort = useFilterStore((state) => state.selectedSort);
+  const searchQuery = useFilterStore((state) => state.searchQuery);
 
-const GameGrid: React.FC<GameGridProps> = ({
-  selectedGenre,
-  selectedPlatform,
-  selectedSort,
-  searchQuery,
-}) => {
-  const { data, error, isLoading, fetchNextPage, hasNextPage } = useGames({
+  const {
+    data,
+    error,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGames({
     genres: selectedGenre?.id,
     platforms: selectedPlatform?.id,
     ordering: selectedSort,
@@ -51,6 +49,16 @@ const GameGrid: React.FC<GameGridProps> = ({
   }
 
   const games = data?.pages.flatMap((page) => page.results) || [];
+
+  if (games.length === 0) {
+    return (
+      <Box padding="4" bg={bgColor} maxWidth="1600px" mx="auto">
+        <Text fontSize="lg" color="red.500">
+          No items found.
+        </Text>
+      </Box>
+    );
+  }
 
   return (
     <Box padding="4" bg={bgColor} maxWidth="1600px" mx="auto">

@@ -1,6 +1,6 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import apiClient from "../services/api-client";
-import { Game } from "../types/GameTypes";
+import { useInfiniteQuery } from '@tanstack/react-query';
+import apiClient from '../services/api-client';
+import { Game } from '../types/GameTypes';
 
 interface GameResponse {
   results: Game[];
@@ -14,7 +14,6 @@ interface FetchGamesParams {
   search?: string;
 }
 
-
 const fetchGames = async ({
   pageParam = 1,
   queryKey,
@@ -24,7 +23,7 @@ const fetchGames = async ({
 }) => {
   const [, params] = queryKey;
   const { genres, platforms, ordering, search } = params;
-  const response = await apiClient.get<GameResponse>("/games", {
+  const response = await apiClient.get<GameResponse>('/games', {
     params: {
       page: pageParam,
       genres,
@@ -38,12 +37,13 @@ const fetchGames = async ({
 
 const useGames = (params: FetchGamesParams) => {
   return useInfiniteQuery(
-    ["games", params],
+    ['games', params],
     fetchGames,
     {
       getNextPageParam: (lastPage) => {
-        const url = new URL(lastPage.next || '');
-        return url.searchParams.get('page');
+        if (!lastPage.next) return undefined;
+        const url = new URL(lastPage.next);
+        return url.searchParams.get('page') ? Number(url.searchParams.get('page')) : undefined;
       },
     }
   );

@@ -2,13 +2,14 @@ import React from "react";
 import { Box, Text, useColorModeValue, Select } from "@chakra-ui/react";
 import usePlatforms from "../hooks/usePlatforms";
 import { Platform } from "../types/GameTypes";
+import useFilterStore from "../store";
 
-interface Props {
-  selectedPlatform: Platform | null;
-  onPlatformSelect: (platform: Platform | null) => void;
-}
+const PlatformGrid: React.FC = () => {
+  const { selectedPlatform, setSelectedPlatform } = useFilterStore((state) => ({
+    selectedPlatform: state.selectedPlatform,
+    setSelectedPlatform: state.setSelectedPlatform,
+  }));
 
-const PlatformGrid = ({ selectedPlatform, onPlatformSelect }: Props) => {
   const { data: platforms, error, isLoading } = usePlatforms();
 
   const bgColor = useColorModeValue("gray.100", "gray.800");
@@ -40,13 +41,14 @@ const PlatformGrid = ({ selectedPlatform, onPlatformSelect }: Props) => {
         borderWidth="2px"
         borderRadius="md"
         placeholder="Select platform"
+        value={selectedPlatform?.id ?? ""}
         onChange={(e) => {
-          const platformId = parseInt(e.target.value);
+          const platformId = parseInt(e.target.value, 10);
           const selected =
             platforms?.find(
-              (platform: { id: number }) => platform.id === platformId
-            ) || null;
-          onPlatformSelect(selected);
+              (platform: Platform) => platform.id === platformId
+            ) || undefined;
+          setSelectedPlatform(selected);
         }}
       >
         {platforms?.map((platform) => (
