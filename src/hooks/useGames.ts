@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import apiClient from "../services/api-client";
-import { Game } from "../components/GameTypes";
+import { Game } from "../types/GameTypes";
 
 interface GameResponse {
   results: Game[];
@@ -15,21 +15,26 @@ interface FetchGamesParams {
 }
 
 
-const fetchGames = async ({ pageParam = 1, queryKey }: { pageParam?: number; queryKey: [string, FetchGamesParams] }) => {
-    const [, params] = queryKey;
-    const { genres, platforms, ordering, search } = params;
-    const response = await apiClient.get<GameResponse>("/games", {
-      params: {
-        page: pageParam,
-        genres,
-        platforms,
-        ordering,
-        search,
-      },
-    });
-    return response.data;
-  };
-  
+const fetchGames = async ({
+  pageParam = 1,
+  queryKey,
+}: {
+  pageParam?: number;
+  queryKey: [string, FetchGamesParams];
+}) => {
+  const [, params] = queryKey;
+  const { genres, platforms, ordering, search } = params;
+  const response = await apiClient.get<GameResponse>("/games", {
+    params: {
+      page: pageParam,
+      genres,
+      platforms,
+      ordering,
+      search,
+    },
+  });
+  return response.data;
+};
 
 const useGames = (params: FetchGamesParams) => {
   return useInfiniteQuery(

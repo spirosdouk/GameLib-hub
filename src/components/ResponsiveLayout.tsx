@@ -4,8 +4,8 @@ import Navbar from "./Navbar";
 import GameGrid from "./GameGrid";
 import GenreGrid from "./GenreGrid";
 import apiClient from "../services/api-client";
-import { Genre, GenreResponse } from "./GenreTypes";
-import { Game, Platform, PlatformResponse } from "./GameTypes";
+import { Genre, GenreResponse } from "../types/GenreTypes";
+import { Game, Platform, PlatformResponse } from "../types/GameTypes";
 import PlatformGrid from "./PlatformGrid";
 import SortSelector from "./SortSelector";
 

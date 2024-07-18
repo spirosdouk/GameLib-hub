@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text, useColorModeValue, Select } from "@chakra-ui/react";
 import usePlatforms from "../hooks/usePlatforms";
-import { Platform } from "./GameTypes";
+import { Platform } from "../types/GameTypes";
 
 interface Props {
   selectedPlatform: Platform | null;

@@ -12,7 +12,7 @@ import { MdPhoneIphone } from "react-icons/md";
 import { BsGlobe } from "react-icons/bs";
 import { SiNintendo } from "react-icons/si";
 
-import { Platform } from "./GameTypes";
+import { Platform } from "../types/GameTypes";
 
 interface PlatformProps {
   platforms?: {

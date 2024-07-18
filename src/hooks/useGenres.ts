@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "../services/api-client";
-import { GenreResponse } from "../components/GenreTypes";
+import { GenreResponse } from "../types/GenreTypes";
 
 const fetchGenres = async () => {
   const response = await apiClient.get<GenreResponse>("/genres");

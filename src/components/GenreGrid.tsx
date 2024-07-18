@@ -7,7 +7,7 @@ import {
   useColorModeValue,
   Flex,
 } from "@chakra-ui/react";
-import { Genre } from "./GenreTypes";
+import { Genre } from "../types/GenreTypes";
 import useGenres from "../hooks/useGenres";
 
 interface Props {

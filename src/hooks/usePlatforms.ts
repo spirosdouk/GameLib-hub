@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "../services/api-client";
-import { Platform, PlatformResponse } from "../components/GameTypes";
+import { Platform, PlatformResponse } from "../types/GameTypes";
 
 const fetchPlatforms = async () => {
   const response = await apiClient.get<PlatformResponse>("/platforms");

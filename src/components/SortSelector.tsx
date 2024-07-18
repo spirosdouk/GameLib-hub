@@ -11,7 +11,6 @@ const SortSelector: React.FC<SortSelectorProps> = ({
   onSortSelect,
 }) => {
   const sortOptions = [
-    { label: "Order by: Relevance", value: "" },
     { label: "Order by: Date added", value: "added" },
     { label: "Order by: Name", value: "name" },
     { label: "Order by: Average rating", value: "-rating" },
@@ -29,7 +28,7 @@ const SortSelector: React.FC<SortSelectorProps> = ({
         shadow="md"
         borderWidth="2px"
         borderRadius="md"
-        placeholder="Order by"
+        placeholder="Order by: Relevance"
         value={selectedSort}
         onChange={(e) => onSortSelect(e.target.value)}
       >
