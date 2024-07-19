@@ -72,7 +72,7 @@ const GameGrid: React.FC = () => {
       >
         <SimpleGrid columns={{ sm: 2, md: 2, lg: 4 }} spacing={8}>
           {games.map((game: Game) => (
-            <Link to={`/game/${game.id}`} key={game.id}>
+            <Link to={`/game/${game.slug}`} key={game.id}>
               <Box
                 p="4"
                 shadow="xl"

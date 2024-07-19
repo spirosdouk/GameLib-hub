@@ -11,14 +11,14 @@ import {
 import useGameDetails from "../hooks/useGameDetails";
 
 const GameDetails = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
-  if (!id) {
+  if (!slug) {
     return <Text>No game Name provided.</Text>;
   }
 
-  const { data: game, error, isLoading } = useGameDetails(id);
+  const { data: game, error, isLoading } = useGameDetails(slug);
 
   if (isLoading) return <Text>Loading...</Text>;
   if (error && error instanceof Error)
@@ -65,18 +65,20 @@ const GameDetails = () => {
                 },
               }}
             />
-            <Stack direction="row" spacing={4} mt="4">
-              {game.parent_platforms.map(({ platform }) => (
-                <Button
-                  key={platform.id}
-                  bg={bgButColor}
-                  p="2"
-                  borderRadius="md"
-                >
-                  <Text>{platform.name}</Text>
-                </Button>
-              ))}
-            </Stack>
+            {game.parent_platforms && game.parent_platforms.length > 0 && (
+              <Stack direction="row" spacing={4} mt="4">
+                {game.parent_platforms.map(({ platform }) => (
+                  <Box
+                    key={platform.id}
+                    bg={bgButColor}
+                    p="2"
+                    borderRadius="md"
+                  >
+                    <Text>{platform.name}</Text>
+                  </Box>
+                ))}
+              </Stack>
+            )}
           </>
         )}
       </Box>
