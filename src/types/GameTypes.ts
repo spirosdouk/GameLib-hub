@@ -15,10 +15,10 @@
     background_image: string;
     parent_platforms: { platform: Platform }[];
     metacritic: number;
+    description: string
   }
   
   export interface GameGridProps {
     games: Game[];
     error: string;
   }
-  
