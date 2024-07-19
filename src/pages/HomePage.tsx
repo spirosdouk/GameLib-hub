@@ -1,8 +1,8 @@
-import theme from "./theme/theme";
+import theme from "../theme/theme";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import ResponsiveLayout from "./components/ResponsiveLayout";
-import GameDetails from "./components/GameDetails";
+import ResponsiveLayout from "../components/ResponsiveLayout";
+import GameDetails from "./GameDetails";
 
 const App = () => {
   return (
