@@ -1,16 +1,14 @@
-import { Box, Select, Text, useColorModeValue } from "@chakra-ui/react";
+import React from "react";
+import { Box, Select, useColorModeValue } from "@chakra-ui/react";
+import useFilterStore from "../store";
 
-interface SortSelectorProps {
-  selectedSort: string;
-  onSortSelect: (sort: string) => void;
-}
+const SortSelector: React.FC = () => {
+  const { selectedSort, setSelectedSort } = useFilterStore((state) => ({
+    selectedSort: state.selectedSort,
+    setSelectedSort: state.setSelectedSort,
+  }));
 
-const SortSelector: React.FC<SortSelectorProps> = ({
-  selectedSort,
-  onSortSelect,
-}) => {
   const sortOptions = [
-    { label: "Order by: Relevance", value: "" },
     { label: "Order by: Date added", value: "added" },
     { label: "Order by: Name", value: "name" },
     { label: "Order by: Average rating", value: "-rating" },
@@ -28,9 +26,9 @@ const SortSelector: React.FC<SortSelectorProps> = ({
         shadow="md"
         borderWidth="2px"
         borderRadius="md"
-        placeholder="Order by"
+        placeholder="Order by: Relevance"
         value={selectedSort}
-        onChange={(e) => onSortSelect(e.target.value)}
+        onChange={(e) => setSelectedSort(e.target.value)}
       >
         {sortOptions.map((option) => (
           <option key={option.value} value={option.value}>
