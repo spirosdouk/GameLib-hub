@@ -16,14 +16,33 @@ To get started with GameHub, follow these steps:
 
 ## Skills Learned
 
-Through this course, I have gained the following skills:
+Through this Project, I have gained the following skills:
 
-- Building front-end applications with React and TypeScript
-- Styling components using vanilla CSS, CSS modules, and ChackraUI
+- **Connecting React applications to backend services**: Integrated with RESTful APIs for dynamic data fetching and ensured seamless communication between frontend and backend.
+- **Building front-end applications** with React and TypeScript
+- **Deploying React applications**: Deployed applications to platforms like Vercel
+- **Applying best practices** in React development
+- **Styling components** using vanilla CSS, CSS modules, and ChackraUI
 - Managing component state effectively
 - Implementing form validation using Zod
-- Connecting React applications to backend services
-- Deploying React applications
-- Writing clean, maintainable code
-- Creating reusable function components 
-- Applying best practices in React development
+- **Writing clean, maintainable code**: Followed best practices and coding standards to ensure readability, maintainability, and scalability of the codebase.
+- **Creating reusable function components**
+
+
+## Screenshots of the project
+
+
+![image](https://github.com/user-attachments/assets/5715f76f-4398-4725-8050-b9c104bd448a)
+
+![image](https://github.com/user-attachments/assets/72e57feb-d3e9-4e0e-aa66-3eb842346bdf)
+
+![image](https://github.com/user-attachments/assets/21c89a99-ee1c-4d36-b3b6-6de975be9b2a)
+
+![image](https://github.com/user-attachments/assets/3d2f5bca-affe-419a-934b-4aa3ef899ff0)
+
+
+Disclaimer
+All game data, images, and other media content used in this project are sourced from the RAWG API. This content is provided by RAWG and is not owned by the developer
+of this application. All credits for the game data and images go to RAWG and their respective owners.
+
+
