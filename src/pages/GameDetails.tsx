@@ -10,6 +10,9 @@ import {
 } from "@chakra-ui/react";
 import useGameDetails from "../hooks/useGameDetails";
 import ExpandableDescription from "../components/ExpandableDescription";
+import GameShowcase from "../components/GameShowcase";
+import TrailerComponent from "../components/TrailerComponent";
+import ScreenshotComponent from "../components/ScreenshotComponent";
 
 const GameDetails = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -40,16 +43,15 @@ const GameDetails = () => {
       </Button>
       {game && (
         <>
+          <Heading as="h1" size="xl" mb="2">
+            {game.name}
+          </Heading>
           <Image
             src={game.background_image}
             alt={game.name}
             borderRadius="md"
-            objectFit="cover"
             mb="4"
           />
-          <Heading as="h1" size="xl" mb="2">
-            {game.name}
-          </Heading>
           {game.parent_platforms && game.parent_platforms.length > 0 && (
             <Stack direction="row" spacing={4} mt="4" mb="2">
               {game.parent_platforms.map(({ platform }) => (
@@ -60,6 +62,9 @@ const GameDetails = () => {
             </Stack>
           )}
           <ExpandableDescription description={game.description} />
+          <GameShowcase game={game} />
+          <ScreenshotComponent gameId={game.id} />
+          <TrailerComponent gameId={game.id} />
         </>
       )}
     </Box>
